@@ -1,8 +1,9 @@
 const JobBoard = require('../models/JobBoard');
 const mongodb = require('mongodb').MongoClient;
 const jobBoardsJSON = require('../assets/jobBoards.json');
+const mongoose = require('mongoose');
 
-let url = 'mongodb://localhost:27017/';
+let url = 'mongodb://localhost:27017/jobs-api';
 
 const jobBoardsList = jobBoardsJSON['job_boards'];
 const jobBoardsDatabaseList = [];
@@ -19,13 +20,10 @@ jobBoardsList.map(board => {
   );
 });
 
-mongodb.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
-  if (err) throw err;
-  client
-    .db('jobs-api')
-    .collection('jobs-boards')
-    .insertMany(jobBoardsDatabaseList, (err, res) => {
-      if (err) throw err;
-      client.close();
-    });
-});
+mongoose.connect(url, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
+JobBoard.insertMany(jobBoardsDatabaseList)
+  .then(function() {
+    console.log(jobBoardsDatabaseList.length);
+    console.log('Data inserted'); // Success
+  })
+  .catch(function(error) {});

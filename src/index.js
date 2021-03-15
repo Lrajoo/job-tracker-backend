@@ -1,14 +1,15 @@
 const express = require('express');
-//require('./db/addJobOpportunities');
-//require('./db/addJobBoards');
+const cors = require('cors');
+require('./db/addJobBoards');
+require('./db/addJobOpportunities');
 const JobOpportunity = require('./models/JobOpportunity');
 const JobBoard = require('./models/JobBoard');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.json());
-
+//app.use(express.json());
+app.use(cors());
 app.post('/opportunities', async (req, res) => {
   const jobOpportunity = new JobOpportunity(req.body);
   try {
@@ -28,10 +29,10 @@ app.get('/opportunities', async (req, res) => {
   }
 });
 
-app.get('/opportunities/:id', async (req, res) => {
-  const id = req.params.id;
+app.get('/opportunities/:source', async (req, res) => {
+  const source = req.params.source;
   try {
-    const opportunity = await JobOpportunity.findById(id);
+    const opportunity = await JobOpportunity.find({ jobSource: source });
     if (!opportunity) {
       return res.status(404).send();
     }
