@@ -3,7 +3,8 @@ const mongodb = require('mongodb').MongoClient;
 const jobBoardsJSON = require('../assets/jobBoards.json');
 const mongoose = require('mongoose');
 
-let url = 'mongodb://localhost:27017/jobs-api';
+let url = 'mongodb+srv://admin:admin@cluster0.qupsw.mongodb.net/jobs-api?retryWrites=true&w=majority';
+//'mongodb://localhost:27017/jobs-api';
 
 const jobBoardsList = jobBoardsJSON['job_boards'];
 const jobBoardsDatabaseList = [];
