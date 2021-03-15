@@ -10,7 +10,7 @@ const resolver = require('../util/jobSourceResolver');
 let url = 'mongodb+srv://admin:admin@cluster0.qupsw.mongodb.net/jobs-api?retryWrites=true&w=majority';
 //'mongodb://localhost:27017/jobs-api';
 
-fs.createReadStream('/Users/lingessrajoo/Desktop/Pathrise/job-tracker-backend/src/assets/job_opportunities.csv')
+fs.createReadStream('src/assets/job_opportunities.csv')
   .pipe(csv({}))
   .on('data', data => {
     let jobSource = resolver.jobSourceResolver(
